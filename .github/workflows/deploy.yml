@@ -2,7 +2,7 @@ name: Deploy React App
 
 on:
   push:
-    branches: [GitPage-Portifolio]
+    branches: [main]
 
 permissions:
   contents: read
