@@ -1,0 +1,22 @@
+import { useLocation } from "wouter";
+
+interface PageTransitionProps {
+  children: React.ReactNode;
+}
+
+export function PageTransition({ children }: PageTransitionProps) {
+  const [location] = useLocation();
+
+  return (
+    <div
+      key={location}
+      className="page-enter"
+      style={{
+        transformStyle: "preserve-3d",
+        perspective: "1000px",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
