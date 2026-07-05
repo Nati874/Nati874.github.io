@@ -35,7 +35,7 @@ export const NavBar = ({
     const el = document.getElementById(section);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
-      window.history.pushState(null, "", section === "home" ? "/" : `/${section}`);
+      window.history.pushState(null, "", section === "home" ? "/" : `/#${section}`);
       onSectionChange?.(section);
     }
   };

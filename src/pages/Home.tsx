@@ -27,9 +27,10 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Initial scroll on load/refresh based on current pathname
+    // Initial scroll on load/refresh based on current hash or pathname
+    const hash = window.location.hash;
     const path = window.location.pathname;
-    const targetSection = path === "/" ? "home" : path.substring(1);
+    const targetSection = hash ? hash.substring(1) : (path === "/" ? "home" : path.substring(1));
     const element = document.getElementById(targetSection);
     if (element) {
       setTimeout(() => {
@@ -52,9 +53,9 @@ export default function Home() {
         if (entry.isIntersecting) {
           const id = entry.target.id;
           setActiveSection(id);
-          const targetPath = id === "home" ? "/" : `/${id}`;
-          if (window.location.pathname !== targetPath) {
-            window.history.replaceState(null, "", targetPath);
+          const targetHash = id === "home" ? "" : `#${id}`;
+          if (window.location.hash !== targetHash) {
+            window.history.replaceState(null, "", id === "home" ? "/" : `/#${id}`);
           }
         }
       });
@@ -81,7 +82,7 @@ export default function Home() {
     const aboutSection = document.getElementById("about");
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: "smooth" });
-      window.history.pushState(null, "", "/about");
+      window.history.pushState(null, "", "/#about");
       handleSectionChange("about");
     }
   };

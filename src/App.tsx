@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -6,20 +7,44 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { PageTransition } from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import About from "./pages/About";
-import Projects from "./pages/Projects";
-import Experience from "./pages/Experience";
-import Contact from "./pages/Contact";
 
 function Router() {
   return (
     <PageTransition>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/about" component={Home} />
-        <Route path="/projects" component={Home} />
-        <Route path="/experience" component={Home} />
-        <Route path="/contact" component={Home} />
+        <Route path="/about">
+          {() => {
+            useEffect(() => {
+              window.location.replace("/#about");
+            }, []);
+            return null;
+          }}
+        </Route>
+        <Route path="/projects">
+          {() => {
+            useEffect(() => {
+              window.location.replace("/#projects");
+            }, []);
+            return null;
+          }}
+        </Route>
+        <Route path="/experience">
+          {() => {
+            useEffect(() => {
+              window.location.replace("/#experience");
+            }, []);
+            return null;
+          }}
+        </Route>
+        <Route path="/contact">
+          {() => {
+            useEffect(() => {
+              window.location.replace("/#contact");
+            }, []);
+            return null;
+          }}
+        </Route>
         <Route path="/404" component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />
