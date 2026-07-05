@@ -97,178 +97,190 @@ export default function Experience() {
   const [activeTab, setActiveTab] = useState<"education" | "skills" | "experiences">("education");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
-      {/* Navigation */}
-      <NavBar />
-
-      {/* Content */}
-      <div className="pt-32 pb-20 px-4">
-        <div className="container max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="space-y-8 mb-16">
-            <div className="space-y-4">
-              <h1 className="text-5xl lg:text-6xl font-display font-bold text-foreground text-center">
-                Experience
-              </h1>
-              <div className="w-24 h-1 bg-accent rounded-full mx-auto"></div>
-            </div>
-
-            {/* Tab Navigation */}
-            <div className="flex flex-wrap gap-3">
-              {(["education", "skills", "experiences"] as const).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-2 rounded-full font-medium transition-all duration-300 capitalize ${
-                    activeTab === tab
-                      ? "bg-accent text-accent-foreground shadow-lg"
-                      : "bg-accent/10 text-foreground border border-accent/30 hover:border-accent hover:bg-accent/20"
-                  }`}
-                >
-                  {tab === "education" && "Education"}
-                  {tab === "skills" && "Skills"}
-                  {tab === "experiences" && "Experiences"}
-                </button>
-              ))}
-              <Button
-                variant="outline"
-                size="sm"
-                className="ml-auto flex items-center gap-2"
-              >
-                <Download className="w-4 h-4" />
-                Download Resume
-              </Button>
-            </div>
+    <div className="py-24 px-4 relative">
+      <div className="container max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="space-y-8 mb-16">
+          <div className="space-y-4 text-center">
+            <p className="text-accent font-mono text-sm uppercase tracking-widest">// 03. TIMELINE & SKILLS</p>
+            <h2 className="text-5xl lg:text-6xl font-display font-bold text-foreground">
+              Experience
+            </h2>
+            <div className="w-20 h-1 bg-accent rounded-full mx-auto"></div>
           </div>
 
-          {/* Education Tab */}
-          {activeTab === "education" && (
-            <div className="space-y-6">
-           {education.map((edu) => (
-                <div
-                  key={edu.id}
-                  className="bg-card border border-border p-6 shadow-md hover:shadow-lg transition-all duration-300"
-                >
-                  <div className="space-y-2">
-                    <h3 className="text-2xl font-display font-bold text-foreground">
-                      {edu.degree}
-                    </h3>
-                    <p className="text-accent font-semibold">{edu.school}</p>
-                    <p className="text-foreground/70 font-body">{edu.field}</p>
-                    <p className="text-foreground/60 font-body text-sm">{edu.period}</p>
-                    {edu.grade && (
-                      <p className="text-foreground/70 font-body text-sm pt-2">
-                        <span className="font-semibold text-accent">Grade:</span> {edu.grade}
-                      </p>
-                    )}
-                    {edu.examScore && (
-                      <p className="text-foreground/70 font-body text-sm">
-                        <span className="font-semibold text-accent">Exam Score:</span> {edu.examScore}
-                      </p>
-                    )}
-                  </div>
+          {/* Tab Navigation */}
+          <div className="flex flex-wrap gap-2 items-center">
+            {(["education", "skills", "experiences"] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-5 py-2 font-mono text-xs border transition-all duration-300 rounded-none uppercase tracking-wider ${
+                  activeTab === tab
+                    ? "bg-accent text-accent-foreground border-accent font-bold"
+                    : "bg-accent/5 text-foreground border-accent/20 hover:border-accent hover:bg-accent/10"
+                }`}
+              >
+                {tab === "education" && "Education"}
+                {tab === "skills" && "Skills"}
+                {tab === "experiences" && "Experiences"}
+              </button>
+            ))}
+            <Button
+              variant="outline"
+              size="sm"
+              className="ml-auto flex items-center gap-2 rounded-none border-accent/20 hover:border-accent font-mono text-xs tracking-wider"
+            >
+              <Download className="w-3.5 h-3.5 text-accent" />
+              DOWNLOAD_CV
+            </Button>
+          </div>
+        </div>
+
+        {/* Education Tab */}
+        {activeTab === "education" && (
+          <div className="space-y-6">
+            {education.map((edu) => (
+              <div
+                key={edu.id}
+                className="group bg-card border border-accent/20 rounded-none p-6 shadow-md hover:border-accent/50 transition-all duration-300 relative"
+              >
+                {/* Tech corners */}
+                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-display font-bold text-foreground">
+                    {edu.degree}
+                  </h3>
+                  <p className="text-accent font-semibold font-mono text-sm">{edu.school}</p>
+                  <p className="text-foreground/70 font-body text-sm">{edu.field}</p>
+                  <p className="text-foreground/50 font-mono text-xs tracking-wider">// PERIOD: {edu.period}</p>
+                  {edu.grade && (
+                    <p className="text-foreground/70 font-body text-xs pt-2">
+                      <span className="font-mono text-accent font-semibold">[GRADE]:</span> {edu.grade}
+                    </p>
+                  )}
+                  {edu.examScore && (
+                    <p className="text-foreground/70 font-body text-xs">
+                      <span className="font-mono text-accent font-semibold">[EXAM_SCORE]:</span> {edu.examScore}
+                    </p>
+                  )}
                 </div>
-              ))}
-            </div>
-          )}
-
-          {/* Skills Tab */}
-          {activeTab === "skills" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {/* Left Column */}
-              <div className="space-y-12">
-                {["Development", "Languages"].map((category) => {
-                  const categorySkills = skills.filter((s) => s.category === category);
-                  if (categorySkills.length === 0) return null;
-                  return (
-                    <div key={category} className="space-y-6">
-                      <h2 className="text-2xl font-display font-bold text-foreground">
-                        {category}
-                      </h2>
-                      <div className="space-y-4">
-                        {categorySkills.map((skill) => (
-                          <div key={skill.name} className="space-y-2">
-                            <div className="flex items-center justify-between">
-                              <span className="font-body font-semibold text-foreground">
-                                {skill.name}
-                              </span>
-                              <span className="text-accent font-bold">
-                                {skill.percentage}%
-                              </span>
-                            </div>
-                            <div className="w-full h-3 bg-accent/10 overflow-hidden border border-accent/20 rounded-full">
-                              <div
-                                className="h-full bg-gradient-to-r from-orange-500 to-yellow-400 transition-all duration-500 rounded-full"
-                                style={{ width: `${skill.percentage}%` }}
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
               </div>
+            ))}
+          </div>
+        )}
 
-              {/* Right Column */}
-              <div className="space-y-12">
-                {["Design", "Other"].map((category) => {
-                  const categorySkills = skills.filter((s) => s.category === category);
-                  if (categorySkills.length === 0) return null;
-                  return (
-                    <div key={category} className="space-y-6">
-                      <h2 className="text-2xl font-display font-bold text-foreground">
-                        {category}
-                      </h2>
-                      <div className="space-y-4">
-                        {categorySkills.map((skill) => (
-                          <div key={skill.name} className="space-y-2">
-                            <div className="flex items-center justify-between">
-                              <span className="font-body font-semibold text-foreground">
-                                {skill.name}
-                              </span>
-                              <span className="text-accent font-bold">
-                                {skill.percentage}%
-                              </span>
-                            </div>
-                            <div className="w-full h-3 bg-accent/10 overflow-hidden border border-accent/20 rounded-full">
-                              <div
-                                className="h-full bg-gradient-to-r from-orange-500 to-yellow-400 transition-all duration-500 rounded-full"
-                                style={{ width: `${skill.percentage}%` }}
-                              />
-                            </div>
+        {/* Skills Tab */}
+        {activeTab === "skills" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* Left Column */}
+            <div className="space-y-12">
+              {["Development", "Languages"].map((category) => {
+                const categorySkills = skills.filter((s) => s.category === category);
+                if (categorySkills.length === 0) return null;
+                return (
+                  <div key={category} className="space-y-6">
+                    <h2 className="text-2xl font-display font-bold text-foreground font-mono">
+                      // {category.toUpperCase()}
+                    </h2>
+                    <div className="space-y-5">
+                      {categorySkills.map((skill) => (
+                        <div key={skill.name} className="space-y-2">
+                          <div className="flex items-center justify-between font-mono text-xs">
+                            <span className="font-semibold text-foreground">
+                              {skill.name}
+                            </span>
+                            <span className="text-accent font-bold">
+                              {skill.percentage}%
+                            </span>
                           </div>
-                        ))}
-                      </div>
+                          <div className="w-full h-3 bg-accent/5 overflow-hidden border border-accent/20 rounded-none relative p-[1px]">
+                            <div
+                              className="h-full bg-accent transition-all duration-500 rounded-none"
+                              style={{ width: `${skill.percentage}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                );
+              })}
             </div>
-          )}
 
-          {/* Experiences Tab */}
-          {activeTab === "experiences" && (
-            <div className="space-y-6">
-              {experiences.map((exp) => (
+            {/* Right Column */}
+            <div className="space-y-12">
+              {["Design", "Other"].map((category) => {
+                const categorySkills = skills.filter((s) => s.category === category);
+                if (categorySkills.length === 0) return null;
+                return (
+                  <div key={category} className="space-y-6">
+                    <h2 className="text-2xl font-display font-bold text-foreground font-mono">
+                      // {category.toUpperCase()}
+                    </h2>
+                    <div className="space-y-5">
+                      {categorySkills.map((skill) => (
+                        <div key={skill.name} className="space-y-2">
+                          <div className="flex items-center justify-between font-mono text-xs">
+                            <span className="font-semibold text-foreground">
+                              {skill.name}
+                            </span>
+                            <span className="text-accent font-bold">
+                              {skill.percentage}%
+                            </span>
+                          </div>
+                          <div className="w-full h-3 bg-accent/5 overflow-hidden border border-accent/20 rounded-none relative p-[1px]">
+                            <div
+                              className="h-full bg-accent transition-all duration-500 rounded-none"
+                              style={{ width: `${skill.percentage}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Experiences Tab */}
+        {activeTab === "experiences" && (
+          <div className="space-y-6">
+            {experiences.length === 0 ? (
+              <div className="border border-dashed border-accent/20 p-8 text-center font-mono text-xs text-foreground/50">
+                // NO ADDITIONAL COMMERCIAL EXPERIENCE DATA LOGGED. SEE CORE PROJECTS MODULES.
+              </div>
+            ) : (
+              experiences.map((exp) => (
                 <div
                   key={exp.id}
-                  className="bg-card border border-border rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300"
+                  className="group bg-card border border-accent/20 rounded-none overflow-hidden shadow-md hover:border-accent/50 transition-all duration-300"
                 >
-                  {/* Header */}
                   <button
                     onClick={() => setExpandedId(expandedId === exp.id ? null : exp.id)}
-                    className="w-full p-6 flex items-start justify-between hover:bg-accent/5 transition-colors duration-300"
+                    className="w-full p-6 flex items-start justify-between hover:bg-accent/5 transition-colors duration-300 relative"
                   >
+                    {/* Tech outline corners */}
+                    <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+
                     <div className="text-left space-y-2">
                       <h3 className="text-2xl font-display font-bold text-foreground">
                         {exp.title}
                       </h3>
-                      <p className="text-accent font-semibold">{exp.company}</p>
-                      <p className="text-foreground/60 font-body text-sm">{exp.period}</p>
+                      <p className="text-accent font-semibold font-mono text-sm">{exp.company}</p>
+                      <p className="text-foreground/50 font-mono text-xs tracking-wider">// PERIOD: {exp.period}</p>
                     </div>
                     <ChevronDown
-                      className={`w-6 h-6 text-accent transition-transform duration-300 flex-shrink-0 ${
+                      className={`w-5 h-5 text-accent transition-transform duration-300 flex-shrink-0 mt-1 ${
                         expandedId === exp.id ? "rotate-180" : ""
                       }`}
                     />
@@ -276,12 +288,12 @@ export default function Experience() {
 
                   {/* Expanded Content */}
                   {expandedId === exp.id && (
-                    <div className="px-6 pb-6 border-t border-border space-y-4 animate-in fade-in duration-300">
-                      <p className="text-foreground/70 font-body">{exp.description}</p>
+                    <div className="px-6 pb-6 border-t border-accent/10 space-y-4 animate-in fade-in duration-300 font-body text-sm pt-4">
+                      <p className="text-foreground/70">{exp.description}</p>
                       <ul className="space-y-2">
                         {exp.details.map((detail, idx) => (
-                          <li key={idx} className="flex gap-3 text-foreground/70 font-body">
-                            <span className="text-accent font-bold flex-shrink-0">•</span>
+                          <li key={idx} className="flex gap-2.5 text-foreground/70">
+                            <span className="text-accent font-mono font-semibold flex-shrink-0">&gt;</span>
                             <span>{detail}</span>
                           </li>
                         ))}
@@ -289,38 +301,43 @@ export default function Experience() {
                     </div>
                   )}
                 </div>
-              ))}
+              ))
+            )}
 
-              {/* Honors Section */}
-              <div className="mt-12">
-                <h2 className="text-3xl font-display font-bold text-foreground mb-8">Honors & Awards</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {honors.map((honor) => (
-                    <div
-                      key={honor.id}
-                      className="bg-card border border-border rounded-xl p-6 space-y-3 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-                    >
-                      <div className="h-16 bg-gradient-to-br from-accent/20 to-accent/5 rounded-lg flex items-center justify-center">
-                        <span className="text-3xl">🏆</span>
-                      </div>
-                      <h4 className="text-lg font-display font-bold text-foreground">
+            {/* Honors Section */}
+            <div className="mt-16 space-y-8">
+              <h3 className="text-3xl font-display font-bold text-foreground font-mono text-center md:text-left">
+                // HONORS & ACHIEVEMENTS
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {honors.map((honor) => (
+                  <div
+                    key={honor.id}
+                    className="group bg-card border border-accent/20 rounded-none p-6 space-y-4 shadow-md hover:border-accent/50 hover:-translate-y-1 transition-all duration-300 relative"
+                  >
+                    {/* Tech corners */}
+                    <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                    <div className="h-14 bg-accent/5 rounded-none flex items-center justify-center border border-accent/10">
+                      <span className="text-2xl opacity-80 group-hover:scale-110 transition-transform duration-300">🏆</span>
+                    </div>
+                    <div className="space-y-1.5">
+                      <h4 className="text-lg font-display font-bold text-foreground leading-tight">
                         {honor.title}
                       </h4>
-                      <p className="text-accent font-semibold text-sm">{honor.organization}</p>
-                      <p className="text-foreground/60 font-body text-sm">{honor.date}</p>
+                      <p className="text-accent font-semibold font-mono text-xs">{honor.organization}</p>
+                      <p className="text-foreground/50 font-mono text-[10px] tracking-wider">// YEAR: {honor.date}</p>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-      {/* Page Navigation */}
-      <PageNavigation
-        previousPage={{ href: "/projects", label: "Projects" }}
-        nextPage={{ href: "/contact", label: "Contact" }}
-      />
     </div>
   );
 }

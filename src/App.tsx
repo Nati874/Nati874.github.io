@@ -16,10 +16,10 @@ function Router() {
     <PageTransition>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/projects" component={Projects} />
-        <Route path="/experience" component={Experience} />
-        <Route path="/contact" component={Contact} />
+        <Route path="/about" component={Home} />
+        <Route path="/projects" component={Home} />
+        <Route path="/experience" component={Home} />
+        <Route path="/contact" component={Home} />
         <Route path="/404" component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />

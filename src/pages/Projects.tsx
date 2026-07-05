@@ -182,77 +182,90 @@ export default function Projects() {
       : projects.filter((p) => p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
-      {/* Navigation */}
-      <NavBar />
-
-      {/* Content */}
-      <div className="pt-32 pb-20 px-4">
-        <div className="container max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="space-y-8 mb-16">
-            <div className="space-y-4">
-              <h1 className="text-5xl lg:text-6xl font-display font-bold text-foreground text-center">
-                Projects
-              </h1>
-              <div className="w-24 h-1 bg-accent rounded-full mx-auto"></div>
-            </div>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-3">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                    selectedCategory === cat
-                      ? "bg-accent text-accent-foreground shadow-lg scale-105"
-                      : "bg-accent/10 text-foreground border border-accent/30 hover:border-accent hover:bg-accent/20"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+    <div className="py-24 px-4 relative">
+      <div className="container max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="space-y-8 mb-16 text-center">
+          <div className="space-y-4">
+            <p className="text-accent font-mono text-sm uppercase tracking-widest">// 02. PORTFOLIO</p>
+            <h2 className="text-5xl lg:text-6xl font-display font-bold text-foreground">
+              Featured Projects
+            </h2>
+            <div className="w-20 h-1 bg-accent rounded-full mx-auto"></div>
           </div>
 
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project) => (
-              <div
-                key={project.id}
-                className="group bg-card border border-border rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+          {/* Category Filter */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-5 py-2 font-mono text-xs border transition-all duration-300 rounded-none uppercase tracking-wider ${
+                  selectedCategory === cat
+                    ? "bg-accent text-accent-foreground border-accent font-bold"
+                    : "bg-accent/5 text-foreground border-accent/20 hover:border-accent hover:bg-accent/10"
+                }`}
               >
-                {/* Image */}
-                <div className="h-48 bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center overflow-hidden relative">
-                  <div className="text-6xl opacity-30">📦</div>
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
-                </div>
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
 
-                {/* Content */}
-                <div className="p-6 space-y-4">
-                  <div className="space-y-2">
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="group bg-card border border-accent/20 rounded-none overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 hover:border-accent/50 flex flex-col relative"
+            >
+              {/* Tech outline corners */}
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+              {/* Blueprint Image Placeholder */}
+              <div className="h-44 bg-accent/5 flex items-center justify-center overflow-hidden relative border-b border-accent/10">
+                {/* Subtle visual grid */}
+                <div className="absolute inset-0 grid grid-cols-6 grid-rows-4 opacity-10">
+                  {Array.from({ length: 24 }).map((_, i) => (
+                    <div key={i} className="border-[0.5px] border-accent" />
+                  ))}
+                </div>
+                <div className="font-mono text-xs text-accent/40 group-hover:text-accent/60 group-hover:scale-105 transition-all select-none">
+                  [ MODULE // {project.category} ]
+                </div>
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="space-y-1">
                     <h3 className="text-xl font-display font-bold text-foreground group-hover:text-accent transition">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-foreground/60 font-body">{project.category}</p>
+                    <p className="text-xs text-accent/60 font-mono tracking-wider">CATEGORY: {project.category}</p>
                   </div>
 
-                  <p className="text-foreground/70 font-body line-clamp-2">{project.description}</p>
+                  <p className="text-foreground/70 font-body text-sm line-clamp-3 leading-relaxed">{project.description}</p>
+                </div>
 
+                <div className="space-y-4 pt-2">
                   {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 2).map((tech) => (
+                  <div className="flex flex-wrap gap-1.5 font-mono text-[10px]">
+                    {project.technologies.slice(0, 3).map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-accent/10 text-accent text-xs font-medium rounded-full"
+                        className="px-2 py-0.5 border border-accent/30 bg-accent/5 text-foreground"
                       >
-                        {tech}
+                        [{tech}]
                       </span>
                     ))}
-                    {project.technologies.length > 2 && (
-                      <span className="px-3 py-1 bg-accent/10 text-accent text-xs font-medium rounded-full">
-                        +{project.technologies.length - 2}
+                    {project.technologies.length > 3 && (
+                      <span className="px-2 py-0.5 border border-accent/20 bg-accent/5 text-accent font-bold">
+                        +{project.technologies.length - 3}
                       </span>
                     )}
                   </div>
@@ -260,11 +273,11 @@ export default function Projects() {
                   {/* Expand Button */}
                   <button
                     onClick={() => setExpandedId(expandedId === project.id ? null : project.id)}
-                    className="w-full flex items-center justify-between px-4 py-2 bg-accent/10 hover:bg-accent/20 text-accent rounded-lg transition-all duration-300 font-medium"
+                    className="w-full flex items-center justify-between px-4 py-2 border border-accent/20 hover:border-accent bg-accent/5 hover:bg-accent/15 text-foreground transition-all duration-300 font-mono text-xs tracking-wider"
                   >
-                    More
+                    // DETAILS
                     <ChevronDown
-                      className={`w-4 h-4 transition-transform duration-300 ${
+                      className={`w-3.5 h-3.5 transition-transform duration-300 text-accent ${
                         expandedId === project.id ? "rotate-180" : ""
                       }`}
                     />
@@ -272,40 +285,40 @@ export default function Projects() {
 
                   {/* Expanded Content */}
                   {expandedId === project.id && (
-                    <div className="pt-4 border-t border-border space-y-4 animate-in fade-in duration-300">
-                      <p className="text-foreground/70 font-body text-sm leading-relaxed">
+                    <div className="pt-4 border-t border-accent/10 space-y-4 animate-in fade-in duration-300">
+                      <p className="text-foreground/70 font-body text-xs leading-relaxed">
                         {project.fullDescription}
                       </p>
 
                       {/* All Tech Tags */}
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5 font-mono text-[10px]">
                         {project.technologies.map((tech) => (
                           <span
                             key={tech}
-                            className="px-3 py-1 bg-accent/10 text-accent text-xs font-medium rounded-full"
+                            className="px-2 py-0.5 border border-accent/30 bg-accent/5 text-foreground"
                           >
-                            {tech}
+                            [{tech}]
                           </span>
                         ))}
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex gap-3 pt-2">
+                      <div className="flex gap-2 pt-1 font-mono text-xs">
                         {project.github && (
                           <a
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-all duration-300 font-medium text-sm"
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 font-semibold"
                           >
-                            <Github className="w-4 h-4" />
-                            GitHub
+                            <Github className="w-3.5 h-3.5" />
+                            GIT_REPO
                           </a>
                         )}
                         {project.gallery && (
-                          <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-accent/10 text-accent border border-accent/30 rounded-lg hover:bg-accent/20 transition-all duration-300 font-medium text-sm">
-                            <ExternalLink className="w-4 h-4" />
-                            Gallery
+                          <button className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 border border-accent/30 bg-accent/5 text-foreground hover:bg-accent/15 transition-all duration-300 font-semibold">
+                            <ExternalLink className="w-3.5 h-3.5 text-accent" />
+                            IMAGES
                           </button>
                         )}
                       </div>
@@ -313,15 +326,10 @@ export default function Projects() {
                   )}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
-      {/* Page Navigation */}
-      <PageNavigation
-        previousPage={{ href: "/about", label: "About" }}
-        nextPage={{ href: "/experience", label: "Experience" }}
-      />
     </div>
   );
 }

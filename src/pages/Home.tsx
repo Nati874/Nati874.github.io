@@ -1,25 +1,81 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
 import { Github, Linkedin, Mail, MessageCircle } from "lucide-react";
 import { NavBar } from "@/components/NavBar";
 import { TypingText, RotatingWords } from "@/components/HeroAnimations";
-import { PageNavigation } from "@/components/PageNavigation";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import profileImg from "../../pictures/profile.jpg";
+import About from "./About";
+import Projects from "./Projects";
+import Experience from "./Experience";
+import Contact from "./Contact";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    // Initial scroll on load/refresh based on current pathname
+    const path = window.location.pathname;
+    const targetSection = path === "/" ? "home" : path.substring(1);
+    const element = document.getElementById(targetSection);
+    if (element) {
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: "auto" });
+      }, 150);
+    }
+  }, []);
+
+  useEffect(() => {
+    const sections = ["home", "about", "projects", "experience", "contact"];
+    const observerOptions = {
+      root: null,
+      rootMargin: "-45% 0px -45% 0px", // Trigger when the section center matches the viewport center
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          setActiveSection(id);
+          const targetPath = id === "home" ? "/" : `/${id}`;
+          if (window.location.pathname !== targetPath) {
+            window.history.replaceState(null, "", targetPath);
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleGetStartedClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+      window.history.pushState(null, "", "/about");
+      setActiveSection("about");
+    }
+  };
+
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-background via-background to-accent/5 overflow-hidden">
-      {/* Dynamic Particle Background */}
+    <div className="relative min-h-screen bg-gradient-to-br from-background via-background to-accent/5 overflow-x-hidden">
+      {/* Dynamic Particle Background (Viewport Fixed) */}
       <ParticleBackground />
 
       {/* Navigation */}
-      <NavBar />
+      <NavBar activeSection={activeSection} onSectionChange={setActiveSection} />
 
-      {/* Hero Section */}
-      <div className="relative pt-32 pb-20 px-4 z-10">
-        <div className="container max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Hero / Home Section */}
+      <section id="home" className="relative min-h-screen pt-20 flex flex-col justify-between z-10">
+        <div className="container max-w-7xl mx-auto flex-1 flex items-center px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
             {/* Left Content */}
             <div className="space-y-8">
               <div className="space-y-2">
@@ -76,14 +132,14 @@ export default function Home() {
               </div>
 
               {/* CTA Button */}
-              <Link href="/projects">
+              <a href="#about" onClick={handleGetStartedClick}>
                 <Button
                   size="lg"
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-6 text-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-mono text-sm uppercase tracking-widest font-semibold px-8 py-6 transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95 border border-accent/30 rounded-none"
                 >
                   Get Started →
                 </Button>
-              </Link>
+              </a>
             </div>
 
             {/* Right Image - Technical Grid/Blueprint & Circular Profile */}
@@ -124,17 +180,43 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Scroll Indicator */}
-      <div className="flex justify-center pb-8 animate-bounce z-10 relative">
-        <div className="w-6 h-10 border-2 border-accent rounded-full flex items-start justify-center p-2">
-          <div className="w-1 h-2 bg-accent rounded-full animate-pulse"></div>
+        {/* Scroll Indicator */}
+        <div className="flex justify-center pb-8 animate-bounce z-10 relative">
+          <a href="#about" onClick={handleGetStartedClick} className="cursor-pointer">
+            <div className="w-6 h-10 border-2 border-accent rounded-full flex items-start justify-center p-2">
+              <div className="w-1 h-2 bg-accent rounded-full animate-pulse"></div>
+            </div>
+          </a>
         </div>
-      </div>
+      </section>
 
-      {/* Page Navigation */}
-      <PageNavigation nextPage={{ href: "/about", label: "About" }} />
+      {/* About Section */}
+      <section id="about" className="relative border-t border-accent/10 bg-background/60 z-10 backdrop-blur-[2px]">
+        <About />
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="relative border-t border-accent/10 bg-background/40 z-10 backdrop-blur-[2px]">
+        <Projects />
+      </section>
+
+      {/* Experience Section */}
+      <section id="experience" className="relative border-t border-accent/10 bg-background/60 z-10 backdrop-blur-[2px]">
+        <Experience />
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="relative border-t border-accent/10 bg-background/40 z-10 backdrop-blur-[2px]">
+        <Contact />
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-accent/10 bg-background/80 text-center font-mono text-[10px] text-foreground/40 z-10 relative">
+        <div className="container max-w-7xl mx-auto px-4">
+          <p>© {new Date().getFullYear()} NATHNAEL AYIZOHIBEL. ALL SYSTEM MODULES ACTIVE. // PORTFOLIO_V2.0</p>
+        </div>
+      </footer>
     </div>
   );
 }

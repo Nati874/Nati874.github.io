@@ -12,16 +12,15 @@ export function ParticleBackground() {
     let animationFrameId: number;
     let particles: Particle[] = [];
     
-    const particleCount = window.innerWidth < 768 ? 35 : 85;
+    const particleCount = window.innerWidth < 768 ? 42 : 102;
     const connectionDistance = 110;
     const mouseConnectionDistance = 160;
 
     const mouse = { x: null as number | null, y: null as number | null, radius: 165 };
 
     const resizeCanvas = () => {
-      const rect = canvas.parentElement?.getBoundingClientRect() || { width: window.innerWidth, height: window.innerHeight };
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
 
     resizeCanvas();
@@ -181,7 +180,7 @@ export function ParticleBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-70"
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-0 opacity-70"
     />
   );
 }
