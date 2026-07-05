@@ -17,10 +17,19 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+    <script>
+      (function() {
+        var endpoint = "%VITE_ANALYTICS_ENDPOINT%";
+        var id = "%VITE_ANALYTICS_WEBSITE_ID%";
+        if (endpoint && id && !endpoint.startsWith("%") && !id.startsWith("%")) {
+          var script = document.createElement("script");
+          script.defer = true;
+          script.src = endpoint + "/umami";
+          script.setAttribute("data-website-id", id);
+          document.head.appendChild(script);
+        }
+      })();
+    </script>
   </body>
 
 </html>
