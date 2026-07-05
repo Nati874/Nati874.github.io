@@ -69,6 +69,7 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
+          <div className="fixed inset-0 bg-gradient-to-br from-background via-background to-accent/5 pointer-events-none -z-10" />
           <ParticleBackground />
           <NavBar />
           <Router />

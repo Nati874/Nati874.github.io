@@ -32,7 +32,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-background via-background to-accent/5 overflow-x-hidden">
+    <div className="relative min-h-screen overflow-x-hidden bg-transparent">
       {/* Hero / Home Section */}
       <section id="home" className="relative min-h-screen pt-20 flex flex-col justify-between z-10">
         <div className="container max-w-7xl mx-auto flex-1 flex items-center px-4">
