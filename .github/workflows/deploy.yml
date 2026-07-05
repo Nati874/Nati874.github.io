@@ -26,7 +26,6 @@ jobs:
 
       - name: Install and Build
         run: |
-          cd client
           npm install --legacy-peer-deps
           npm run build
 
