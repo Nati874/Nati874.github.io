@@ -98,7 +98,7 @@ export function ParticleBackground() {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${baseColor}, 0.25)`;
+        ctx.fillStyle = `rgba(${baseColor}, 0.45)`;
         ctx.fill();
       }
     }
@@ -137,7 +137,7 @@ export function ParticleBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < connectionDistance) {
-            const alpha = ((connectionDistance - dist) / connectionDistance) * 0.15;
+            const alpha = ((connectionDistance - dist) / connectionDistance) * 0.22;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
@@ -152,7 +152,7 @@ export function ParticleBackground() {
           const dy = p1.y - mouse.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < mouseConnectionDistance) {
-            const alpha = ((mouseConnectionDistance - dist) / mouseConnectionDistance) * 0.25;
+            const alpha = ((mouseConnectionDistance - dist) / mouseConnectionDistance) * 0.35;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(mouse.x, mouse.y);
@@ -180,7 +180,7 @@ export function ParticleBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-70 text-accent"
+      className="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-70 text-foreground"
     />
   );
 }
