@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, MessageCircle } from "lucide-react";
+import { memo } from "react";
 
-export default function About() {
+const About = memo(function About() {
   const handleScrollToContact = (e: React.MouseEvent) => {
     e.preventDefault();
     const contactSection = document.getElementById("contact");
@@ -134,4 +135,6 @@ export default function About() {
       </div>
     </div>
   );
-}
+});
+
+export default About;

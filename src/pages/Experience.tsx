@@ -92,7 +92,9 @@ const honors: Honor[] = [
   { id: "10", title: "BDU STEM Center Science Fair Winner", date: "2025", organization: "BDU" }
 ];
 
-export default function Experience() {
+import { memo } from "react";
+
+const Experience = memo(function Experience() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"education" | "skills" | "experiences">("education");
 
@@ -340,4 +342,6 @@ export default function Experience() {
       </div>
     </div>
   );
-}
+});
+
+export default Experience;

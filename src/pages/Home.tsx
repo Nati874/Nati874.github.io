@@ -8,10 +8,23 @@ import About from "./About";
 import Projects from "./Projects";
 import Experience from "./Experience";
 import Contact from "./Contact";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
+  const isScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<number | null>(null);
+
+  const handleSectionChange = (section: string) => {
+    setActiveSection(section);
+    isScrollingRef.current = true;
+    if (scrollTimeoutRef.current !== null) {
+      window.clearTimeout(scrollTimeoutRef.current);
+    }
+    scrollTimeoutRef.current = window.setTimeout(() => {
+      isScrollingRef.current = false;
+    }, 1000);
+  };
 
   useEffect(() => {
     // Initial scroll on load/refresh based on current pathname
@@ -34,6 +47,7 @@ export default function Home() {
     };
 
     const observer = new IntersectionObserver((entries) => {
+      if (isScrollingRef.current) return;
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const id = entry.target.id;
@@ -54,13 +68,21 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current !== null) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleGetStartedClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const aboutSection = document.getElementById("about");
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: "smooth" });
       window.history.pushState(null, "", "/about");
-      setActiveSection("about");
+      handleSectionChange("about");
     }
   };
 
@@ -70,7 +92,7 @@ export default function Home() {
       <ParticleBackground />
 
       {/* Navigation */}
-      <NavBar activeSection={activeSection} onSectionChange={setActiveSection} />
+      <NavBar activeSection={activeSection} onSectionChange={handleSectionChange} />
 
       {/* Hero / Home Section */}
       <section id="home" className="relative min-h-screen pt-20 flex flex-col justify-between z-10">
@@ -192,22 +214,22 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="relative border-t border-accent/10 bg-background/60 z-10 backdrop-blur-[2px]">
+      <section id="about" className="relative border-t border-accent/10 bg-background/85 z-10">
         <About />
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="relative border-t border-accent/10 bg-background/40 z-10 backdrop-blur-[2px]">
+      <section id="projects" className="relative border-t border-accent/10 bg-background/75 z-10">
         <Projects />
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="relative border-t border-accent/10 bg-background/60 z-10 backdrop-blur-[2px]">
+      <section id="experience" className="relative border-t border-accent/10 bg-background/85 z-10">
         <Experience />
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="relative border-t border-accent/10 bg-background/40 z-10 backdrop-blur-[2px]">
+      <section id="contact" className="relative border-t border-accent/10 bg-background/75 z-10">
         <Contact />
       </section>
 

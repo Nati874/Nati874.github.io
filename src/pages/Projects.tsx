@@ -170,9 +170,11 @@ const projects: Project[] = [
   }
 ];
 
+import { memo } from "react";
+
 const categories = ["All", "SWE", "Space Science", "Electronics", "3D Modeling", "Design/Art"];
 
-export default function Projects() {
+const Projects = memo(function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -332,4 +334,6 @@ export default function Projects() {
       </div>
     </div>
   );
-}
+});
+
+export default Projects;

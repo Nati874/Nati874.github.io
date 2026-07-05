@@ -44,8 +44,8 @@ export const NavBar = ({
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/90 backdrop-blur-md shadow-md border-b border-accent/10"
-          : "bg-background/20 backdrop-blur-sm border-b border-transparent"
+          ? "bg-background/95 backdrop-blur-md shadow-md border-b border-accent/20"
+          : "bg-background/70 backdrop-blur-sm border-b border-transparent"
       }`}
     >
       <div className="container flex items-center justify-between h-20 px-4 max-w-7xl mx-auto">

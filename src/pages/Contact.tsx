@@ -6,7 +6,9 @@ import { NavBar } from "@/components/NavBar";
 
 import { PageNavigation } from "@/components/PageNavigation";
 
-export default function Contact() {
+import { memo } from "react";
+
+const Contact = memo(function Contact() {
   const [formData, setFormData] = useState({ email: "", subject: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
 
@@ -170,4 +172,6 @@ export default function Contact() {
       </div>
     </div>
   );
-}
+});
+
+export default Contact;
