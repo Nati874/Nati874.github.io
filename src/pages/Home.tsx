@@ -153,22 +153,22 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="relative border-t border-accent/10 bg-background/85 z-10">
+      <section id="about" className="relative border-t border-accent/10 bg-background/95 backdrop-blur-[4px] z-10">
         <About />
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="relative border-t border-accent/10 bg-background/75 z-10">
+      <section id="projects" className="relative border-t border-accent/10 bg-background/90 backdrop-blur-[4px] z-10">
         <Projects />
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="relative border-t border-accent/10 bg-background/85 z-10">
+      <section id="experience" className="relative border-t border-accent/10 bg-background/95 backdrop-blur-[4px] z-10">
         <Experience />
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="relative border-t border-accent/10 bg-background/75 z-10">
+      <section id="contact" className="relative border-t border-accent/10 bg-background/90 backdrop-blur-[4px] z-10">
         <Contact />
       </section>
 

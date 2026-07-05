@@ -12,7 +12,7 @@ export function ParticleBackground() {
     let animationFrameId: number;
     let particles: Particle[] = [];
     
-    const particleCount = window.innerWidth < 768 ? 42 : 102;
+    const particleCount = window.innerWidth < 768 ? 60 : 155;
     const connectionDistance = 110;
     const mouseConnectionDistance = 160;
 
