@@ -7,6 +7,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { PageTransition } from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import { NavBar } from "./components/NavBar";
 
 function Router() {
   return (
@@ -67,6 +68,7 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
+          <NavBar />
           <Router />
         </TooltipProvider>
       </ThemeProvider>

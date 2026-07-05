@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, MessageCircle } from "lucide-react";
-import { NavBar } from "@/components/NavBar";
 import { TypingText, RotatingWords } from "@/components/HeroAnimations";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import profileImg from "../../pictures/profile.jpg";
@@ -8,24 +7,9 @@ import About from "./About";
 import Projects from "./Projects";
 import Experience from "./Experience";
 import Contact from "./Contact";
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState("home");
-  const isScrollingRef = useRef(false);
-  const scrollTimeoutRef = useRef<number | null>(null);
-
-  const handleSectionChange = (section: string) => {
-    setActiveSection(section);
-    isScrollingRef.current = true;
-    if (scrollTimeoutRef.current !== null) {
-      window.clearTimeout(scrollTimeoutRef.current);
-    }
-    scrollTimeoutRef.current = window.setTimeout(() => {
-      isScrollingRef.current = false;
-    }, 1000);
-  };
-
   useEffect(() => {
     // Initial scroll on load/refresh based on current hash or pathname
     const hash = window.location.hash;
@@ -39,51 +23,12 @@ export default function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    const sections = ["home", "about", "projects", "experience", "contact"];
-    const observerOptions = {
-      root: null,
-      rootMargin: "-45% 0px -45% 0px", // Trigger when the section center matches the viewport center
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      if (isScrollingRef.current) return;
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          setActiveSection(id);
-          const targetHash = id === "home" ? "" : `#${id}`;
-          if (window.location.hash !== targetHash) {
-            window.history.replaceState(null, "", id === "home" ? "/" : `/#${id}`);
-          }
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (scrollTimeoutRef.current !== null) {
-        window.clearTimeout(scrollTimeoutRef.current);
-      }
-    };
-  }, []);
-
   const handleGetStartedClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const aboutSection = document.getElementById("about");
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: "smooth" });
       window.history.pushState(null, "", "/#about");
-      handleSectionChange("about");
     }
   };
 
@@ -91,9 +36,6 @@ export default function Home() {
     <div className="relative min-h-screen bg-gradient-to-br from-background via-background to-accent/5 overflow-x-hidden">
       {/* Dynamic Particle Background (Viewport Fixed) */}
       <ParticleBackground />
-
-      {/* Navigation */}
-      <NavBar activeSection={activeSection} onSectionChange={handleSectionChange} />
 
       {/* Hero / Home Section */}
       <section id="home" className="relative min-h-screen pt-20 flex flex-col justify-between z-10">

@@ -1,16 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { HomeIcon, UserIcon, ProjectIcon, BriefcaseIcon, PhoneIcon } from "@/components/NavIcons";
 
-export const NavBar = ({
-  activeSection,
-  onSectionChange,
-}: {
-  activeSection?: string;
-  onSectionChange?: (section: string) => void;
-}) => {
+export const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const [location] = useLocation();
+
+  const isScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,23 +18,73 @@ export const NavBar = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const currentActive = activeSection || (location === "/" ? "home" : location.substring(1));
+  useEffect(() => {
+    // Only run intersection observer on the root path
+    if (window.location.pathname !== "/") return;
+
+    const sections = ["home", "about", "projects", "experience", "contact"];
+    const observerOptions = {
+      root: null,
+      rootMargin: "-45% 0px -45% 0px", // Trigger when the section center matches the viewport center
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      if (isScrollingRef.current) return;
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          setActiveSection(id);
+          const targetHash = id === "home" ? "" : `#${id}`;
+          if (window.location.hash !== targetHash) {
+            window.history.replaceState(null, "", id === "home" ? "/" : `/#${id}`);
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      observer.disconnect();
+      if (scrollTimeoutRef.current !== null) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [location]); // Re-run if path change occurs (e.g. landing back on "/")
 
   const getLinkClass = (section: string) => {
     return `flex items-center gap-2 transition cursor-pointer font-mono text-xs uppercase tracking-wider ${
-      currentActive === section
+      activeSection === section
         ? "text-accent font-semibold hover:text-accent/80"
         : "text-foreground hover:text-accent"
     }`;
   };
 
   const handleNavClick = (e: React.MouseEvent, section: string) => {
+    if (window.location.pathname !== "/") {
+      // If not on the homepage, perform a normal location redirect
+      window.location.href = section === "home" ? "/" : `/#${section}`;
+      return;
+    }
+
     e.preventDefault();
     const el = document.getElementById(section);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
       window.history.pushState(null, "", section === "home" ? "/" : `/#${section}`);
-      onSectionChange?.(section);
+      
+      setActiveSection(section);
+      isScrollingRef.current = true;
+      if (scrollTimeoutRef.current !== null) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
+      scrollTimeoutRef.current = window.setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 1000);
     }
   };
 
@@ -60,16 +108,16 @@ export const NavBar = ({
           <a href="/" onClick={(e) => handleNavClick(e, "home")} className={getLinkClass("home")}>
             <HomeIcon /> Home
           </a>
-          <a href="/about" onClick={(e) => handleNavClick(e, "about")} className={getLinkClass("about")}>
+          <a href="/#about" onClick={(e) => handleNavClick(e, "about")} className={getLinkClass("about")}>
             <UserIcon /> About
           </a>
-          <a href="/projects" onClick={(e) => handleNavClick(e, "projects")} className={getLinkClass("projects")}>
+          <a href="/#projects" onClick={(e) => handleNavClick(e, "projects")} className={getLinkClass("projects")}>
             <ProjectIcon /> Projects
           </a>
-          <a href="/experience" onClick={(e) => handleNavClick(e, "experience")} className={getLinkClass("experience")}>
+          <a href="/#experience" onClick={(e) => handleNavClick(e, "experience")} className={getLinkClass("experience")}>
             <BriefcaseIcon /> Experience
           </a>
-          <a href="/contact" onClick={(e) => handleNavClick(e, "contact")} className={getLinkClass("contact")}>
+          <a href="/#contact" onClick={(e) => handleNavClick(e, "contact")} className={getLinkClass("contact")}>
             <PhoneIcon /> Contact
           </a>
         </div>
