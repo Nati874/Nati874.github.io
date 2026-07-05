@@ -180,7 +180,7 @@ export function ParticleBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-screen h-screen pointer-events-none z-0 opacity-70"
+      className="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-70"
     />
   );
 }
