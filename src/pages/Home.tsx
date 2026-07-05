@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, MessageCircle } from "lucide-react";
 import { TypingText, RotatingWords } from "@/components/HeroAnimations";
-import { ParticleBackground } from "@/components/ParticleBackground";
 import profileImg from "../../pictures/profile.jpg";
 import About from "./About";
 import Projects from "./Projects";
@@ -34,9 +33,6 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-background via-background to-accent/5 overflow-x-hidden">
-      {/* Dynamic Particle Background (Viewport Fixed) */}
-      <ParticleBackground />
-
       {/* Hero / Home Section */}
       <section id="home" className="relative min-h-screen pt-20 flex flex-col justify-between z-10">
         <div className="container max-w-7xl mx-auto flex-1 flex items-center px-4">

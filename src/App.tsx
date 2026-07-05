@@ -8,6 +8,7 @@ import { PageTransition } from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import { NavBar } from "./components/NavBar";
+import { ParticleBackground } from "./components/ParticleBackground";
 
 function Router() {
   return (
@@ -68,6 +69,7 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
+          <ParticleBackground />
           <NavBar />
           <Router />
         </TooltipProvider>
