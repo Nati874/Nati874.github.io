@@ -19,8 +19,8 @@ export function ParticleBackground() {
     const mouse = { x: null as number | null, y: null as number | null, radius: 165 };
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = canvas.clientWidth || window.innerWidth;
+      canvas.height = canvas.clientHeight || window.innerHeight;
     };
 
     resizeCanvas();
