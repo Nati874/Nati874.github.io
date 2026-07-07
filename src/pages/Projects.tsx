@@ -13,6 +13,7 @@ interface Project {
   technologies: string[];
   image: string;
   github?: string;
+  website?: string;
   gallery?: string[];
 }
 
@@ -25,7 +26,7 @@ const projects: Project[] = [
     fullDescription: "Built a full-stack banking system with secure authentication, real-time transaction processing, and account management. Features include deposit/withdrawal, balance tracking, and transaction history.",
     technologies: ["C#", "UI/UX", "SQLite3"],
     image: "placeholder",
-    github: "https://github.com/Nati874/Banking-System"
+    github: "https://github.com/Nati874/Virtual-Banking-System-with-C-and-SQLite"
   },
   {
     id: "2",
@@ -125,12 +126,14 @@ const projects: Project[] = [
   },
   {
     id: "12",
-    title: "Math Camp Website (In Progress)",
+    title: "Math Camp Website",
     category: "SWE",
     description: "Educational website for mathematics camp program.",
     fullDescription: "Developed a website for a mathematics camp with course listings, registration, and resource materials.",
     technologies: ["PHP", "HTML", "CSS", "JS"],
-    image: "placeholder"
+    image: "placeholder",
+    github: "https://github.com/Nati874/Math-Camp",
+    website: "https://math-camp-kappa.vercel.app/"
   },
   {
     id: "13",
@@ -166,7 +169,18 @@ const projects: Project[] = [
     description: "AI-driven case management for legal/medical purposes.",
     fullDescription: "Built a system that uses AI to manage and organize cases with intelligent categorization and recommendations.",
     technologies: ["React.js", "UI/UX", "SQLite3"],
-    image: "placeholder"
+    image: "placeholder",
+    github: "https://github.com/Nati874/AI_Court_System"
+  },
+  {
+    id: "17",
+    title: "Harurael Website",
+    category: "SWE",
+    description: "A responsive website featuring clean aesthetics and modern design principles.",
+    fullDescription: "Developed Harurael, a bespoke web application with a focus on immersive user experience, responsive grid layouts, and clean typographic design.",
+    technologies: ["React", "TypeScript", "TailwindCSS"],
+    image: "placeholder",
+    github: "https://github.com/Nati874/Harurael"
   }
 ];
 
@@ -315,6 +329,17 @@ const Projects = memo(function Projects() {
                           >
                             <Github className="w-3.5 h-3.5" />
                             GIT_REPO
+                          </a>
+                        )}
+                        {project.website && (
+                          <a
+                            href={project.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 border border-accent/30 bg-accent/5 text-foreground hover:bg-accent/15 transition-all duration-300 font-semibold"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5 text-accent" />
+                            LIVE_DEMO
                           </a>
                         )}
                         {project.gallery && (
