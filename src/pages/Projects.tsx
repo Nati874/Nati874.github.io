@@ -3,6 +3,8 @@ import { ChevronDown, Github, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { PageNavigation } from "@/components/PageNavigation";
 import { NavBar } from "@/components/NavBar";
+import mathCampImg from "../../pictures/math camp.jpg";
+import aiCourtImg from "../../pictures/AI Powered Court.png";
 
 interface Project {
   id: string;
@@ -131,7 +133,7 @@ const projects: Project[] = [
     description: "Educational website for mathematics camp program.",
     fullDescription: "Developed a website for a mathematics camp with course listings, registration, and resource materials.",
     technologies: ["PHP", "HTML", "CSS", "JS"],
-    image: "placeholder",
+    image: mathCampImg,
     github: "https://github.com/Nati874/Math-Camp",
     website: "https://math-camp-kappa.vercel.app/"
   },
@@ -169,7 +171,7 @@ const projects: Project[] = [
     description: "AI-driven case management for legal/medical purposes.",
     fullDescription: "Built a system that uses AI to manage and organize cases with intelligent categorization and recommendations.",
     technologies: ["React.js", "UI/UX", "SQLite3"],
-    image: "placeholder",
+    image: aiCourtImg,
     github: "https://github.com/Nati874/AI_Court_System"
   },
   {
@@ -241,18 +243,28 @@ const Projects = memo(function Projects() {
               <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-              {/* Blueprint Image Placeholder */}
+              {/* Blueprint Image / Project Image */}
               <div className="h-44 bg-accent/5 flex items-center justify-center overflow-hidden relative border-b border-accent/10">
-                {/* Subtle visual grid */}
-                <div className="absolute inset-0 grid grid-cols-6 grid-rows-4 opacity-10">
-                  {Array.from({ length: 24 }).map((_, i) => (
-                    <div key={i} className="border-[0.5px] border-accent" />
-                  ))}
-                </div>
-                <div className="font-mono text-xs text-accent/40 group-hover:text-accent/60 group-hover:scale-105 transition-all select-none">
-                  [ MODULE // {project.category} ]
-                </div>
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
+                {project.image && project.image !== "placeholder" ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <>
+                    {/* Subtle visual grid */}
+                    <div className="absolute inset-0 grid grid-cols-6 grid-rows-4 opacity-10">
+                      {Array.from({ length: 24 }).map((_, i) => (
+                        <div key={i} className="border-[0.5px] border-accent" />
+                      ))}
+                    </div>
+                    <div className="font-mono text-xs text-accent/40 group-hover:text-accent/60 group-hover:scale-105 transition-all select-none">
+                      [ MODULE // {project.category} ]
+                    </div>
+                  </>
+                )}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
               </div>
 
               {/* Content */}

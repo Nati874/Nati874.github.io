@@ -127,13 +127,13 @@ export const NavBar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl z-50 transition-all duration-500 rounded-2xl border shadow-lg ${
           isScrolled
-            ? "bg-background/95 backdrop-blur-md shadow-md border-b border-accent/20"
-            : "bg-background/70 backdrop-blur-sm border-b border-transparent"
+            ? "top-3 bg-background/50 backdrop-blur-xl border-accent/20 shadow-accent/5"
+            : "top-4 bg-background/25 backdrop-blur-md border-border/20 shadow-none"
         }`}
       >
-        <div className="container flex items-center justify-between h-20 px-4 max-w-7xl mx-auto">
+        <div className="container flex items-center justify-between h-16 px-6 max-w-7xl mx-auto">
           <a
             href="/"
             onClick={(e) => handleNavClick(e, "home")}
@@ -182,7 +182,7 @@ export const NavBar = () => {
 
       {/* Mobile Sidebar Menu */}
       <div
-        className={`fixed top-0 right-0 h-screen w-[280px] z-50 bg-background/95 backdrop-blur-md shadow-2xl border-l border-accent/20 flex flex-col p-6 transition-all duration-300 md:hidden ${
+        className={`fixed top-0 right-0 h-screen w-[280px] z-50 bg-background/60 backdrop-blur-xl shadow-2xl border-l border-accent/20 flex flex-col p-6 transition-all duration-300 md:hidden ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
